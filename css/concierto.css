@@ -1,0 +1,102 @@
+/* Configuración General */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Degradado similar al de la imagen */
+    background: radial-gradient(circle at center, #1e52a4 0%, #020b24 100%);
+    padding: 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    color: white;
+}
+
+/* Encabezado */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.title {
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.icon-container {
+    width: 70px;
+    height: 70px;
+}
+
+/* Formulario */
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    background-color: white;
+}
+
+.input-group input::placeholder {
+    color: #ccc;
+}
+
+/* Botón (añadido para funcionalidad) */
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- RESPONSIVE --- */
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .icon-container {
+        width: 55px;
+        height: 55px;
+    }
+
+    .input-group label {
+        font-size: 1.2rem;
+    }
+}
