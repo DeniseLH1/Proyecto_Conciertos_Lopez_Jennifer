@@ -1,5 +1,5 @@
 body{ 
-    background:radial-gradient(rgb(247, 245, 161), rgb(2, 2, 2));
+    background: linear-gradient(-135deg,rgb(7, 14, 20)10%, rgb(26, 82, 167),rgb(3, 6, 8));
     height: 100vh;
     margin:0;
     display: flex;
@@ -7,7 +7,7 @@ body{
     align-items:center ;
 }
 .login{
-    background-color: rgb(255, 233, 160);
+    background-color: rgba(62, 81, 109, 0.89);
     width: auto;
     max-width: 300px;
     height: auto;
@@ -16,6 +16,8 @@ body{
     border-radius: 15px;
     box-sizing: border-box;
     box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+    color: aliceblue;
+    font-family: negrilla;
 }
 .login input{
     width: 100%;
@@ -27,5 +29,8 @@ body{
 }
 .image{
     margin-bottom: 20px;
-    padding-left: 70px;
+    padding-left: 80px;
+}
+#password,#email{
+    border-radius: 5px;
 }
