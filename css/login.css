@@ -1,4 +1,27 @@
 body{ 
-    background:radial-gradient(rgb(230, 230, 109), rgb(38, 38, 38));
+    background:radial-gradient(rgb(247, 245, 161), rgb(2, 2, 2));
     height: 100vh;
+    margin:0;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+}
+.login{
+    background-color: rgb(255, 233, 160);
+    width: auto;
+    max-width: 300px;
+    height: auto;
+    min-height: 400px;
+    padding: 30px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.3);
+}
+.login input{
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+.title{
+    text-align: center;
 }
