@@ -17,13 +17,9 @@
     <header>
         <div class="header-top">
             <img src="../img/Ticket.png" height="100px">
-            <h1 class="title">Tickyiyo</h1>
+            <h1 class="title">Tickyiyo - Administrador 👤 </h1>
             <div class="header-controls">
-                <div class="search-bar">
-                    <input type="text" class="search-input" placeholder="Buscar por artista evento">
-                    <span class="icon">🔍</span>
-                </div>
-                <span class="car">🛒</span>
+                <a href="../Tickyiyo.html" class="btn-logout">Cerrar Sesión</a>
             </div>
         </div>
         <nav>
@@ -37,20 +33,82 @@
 <!-- Parte donde iran los eventos destacados -->
     <main>
         <div class="featured-banner">
-            <h2 class="banner-title">Eventos mas destacados</h2>
+            <h2 class="banner-title">Gestión de eventos</h2>
+            <button id="btn-add-new" class="btn-primary">+ Agregar Nuevo</button>
         </div>
 
-        <div class="events-grid">
-            <article class="event-card">
-                <div class="event-image img-son"><img src="../img/electronica.jpeg" height="130px" width="280px"></div>
-                <div class="event-details">
-                    <h3 class="event-title">FESTIVAL ELECTRÓNICO SONAR</h3>
-                    <div class="event-meta event-price"><span class="currency">$</span> 85.00</div>
-                    <div class="event-meta event-date"><span class="date-icon">🗓️</span> 15 OCT | 21:00</div>
-                </div>
-            </article>
-        </div>
+        <section id="form-container" class="admin-form-section" style="display: none;">
+            <div class="form-card">
+                <h3 id="form-title">Nuevo Registro</h3>
+                <form id="main-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Código</label>
+                            <input type="text" name="codigo" placeholder="Ej: EV-01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" name="nombre" placeholder="Nombre del evento" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoría</label>
+                            <select name="categoria" id="form-category-select">
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Precio ($)</label>
+                            <input type="number" name="precio" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha</label>
+                            <input type="date" name="fecha" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ciudad</label>
+                            <select name="ciudad">
+                                <option value="Bogotá">Bogotá</option>
+                                <option value="Medellín">Medellín</option>
+                                <option value="Barranquilla">Barranquilla</option>
+                                <option value="Bucaramanga">Bucaramanga</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>URL Imagen</label>
+                            <input type="url" name="urlImage" placeholder="https://ejemplo.com/imagen.jpg">
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Descripción</label>
+                        <textarea name="descripcion" rows="3" placeholder="Detalles del evento..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-save">Guardar Cambios</button>
+                        <button type="button" id="btn-cancel" class="btn-cancel">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr id="table-head-row">
+                            <th>Miniatura</th>
+                            <th>Evento</th>
+                            <th>Ciudad</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-data-table">
+                        </tbody>
+                </table>
+            </div>
+        </section>
     </main>
+    
 
 </body>
 </html>
