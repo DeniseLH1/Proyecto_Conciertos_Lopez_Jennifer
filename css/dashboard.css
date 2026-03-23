@@ -44,6 +44,12 @@
         font-size: 1.8rem;
         cursor: pointer;
     }
+    .header-controls {
+        display: flex;       
+        align-items: center;    
+        gap: 15px;             
+    }
+    
     /* - Menu de categorias */
     .header-nav {
         display: flex;
