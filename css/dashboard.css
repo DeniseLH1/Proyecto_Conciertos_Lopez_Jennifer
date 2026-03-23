@@ -15,7 +15,7 @@ body {
     flex-direction: column;
 }
 
-/* --- ENCABEZADO (HEADER) --- */
+/* --- ENCABEZADO --- */
 header {
     padding: 20px;
     display: flex;
@@ -229,8 +229,21 @@ tbody tr:hover {
 }
 
 /* Botones dentro de la tabla */
-.btn-edit-row { color: #f39c12; cursor: pointer; font-weight: bold; margin-right: 15px; border: none; background: none; }
-.btn-delete-row { color: #e74c3c; cursor: pointer; font-weight: bold; border: none; background: none; }
+.btn-edit-row { 
+    color: #f39c12; 
+    cursor: pointer; 
+    font-weight: bold; 
+    margin-right: 15px; 
+    border: none; 
+    background: none; 
+}
+.btn-delete-row { 
+    color: #e74c3c; 
+    cursor: pointer; 
+    font-weight: bold; 
+    border: none; 
+    background: none; 
+}
 
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {

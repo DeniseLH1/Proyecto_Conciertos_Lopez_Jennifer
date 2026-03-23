@@ -1,29 +1,29 @@
 // Referencias
-const catForm = document.getElementById(‘category-form’);
-const catTableBody = document.getElementById(‘categories-table-body’);
+const catForm = document.getElementById('category-form');
+const catTableBody = document.getElementById('categories-table-body');
 
 // --- GUARDAR CATEGORÍA ---
-catForm.addEventListener(‘submit’, event => {
+catForm.addEventListener('submit', event => {
     event.preventDefault();
     
-    const categories = JSON.parse(localStorage.getItem(‘categorias’)) || [];
+    const categories = JSON.parse(localStorage.getItem('categorias')) || [];
     const newCat = {
         id: Date.now(),
-        nombre: document.getElementById(‘cat-name’).value,
-        descripcion: document.getElementById(‘cat-desc’).value
+        nombre: document.getElementById('cat-name').value,
+        descripcion: document.getElementById('cat-desc').value
     };
 
-    Categories.push(newCat);
-    localStorage.setItem(‘categorias’, JSON.stringify(categories)); // Guardamos
+    categories.push(newCat);
+    localStorage.setItem('categorias', JSON.stringify(categories)); // Guardamos
     catForm.reset();
     renderCategories();
-    alert(‘Categoría guardada con éxito’);
+    alert('Categoría guardada con éxito');
 });
 
 // --- RENDERIZAR TABLA ---
-Function renderCategories() {
-    Const categories = JSON.parse(localStorage.getItem(‘categorias’)) || [];
-    catTableBody.innerHTML = ‘’;
+function renderCategories() {
+    const categories = JSON.parse(localStorage.getItem('categorias')) || [];
+    catTableBody.innerHTML = '';
     categories.forEach(cat => {
         catTableBody.innerHTML += `
             <tr>
@@ -37,10 +37,10 @@ Function renderCategories() {
     });
 }
 
-Window.deleteCategory = (id) => {
-    Let categories = JSON.parse(localStorage.getItem(‘categorias’)) || [];
-    Categories = categories.filter(c => c.id ¡== id);
-    localStorage.setItem(‘categorias’, JSON.stringify(categories));
+window.deleteCategory = (id) => {
+    let categories = JSON.parse(localStorage.getItem('categorias')) || [];
+    Categories = categories.filter(c => c.id !== id);
+    localStorage.setItem('categorias', JSON.stringify(categories));
     renderCategories();
 };
 
