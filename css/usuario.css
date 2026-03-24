@@ -114,6 +114,51 @@ header { background: rgba(0, 0, 0, 0.3); padding: 20px; }
 .btn-save { background: #27ae60; color: white; border: none; padding: 12px; border-radius: 5px; flex: 2; cursor: pointer; font-weight: bold; }
 .btn-cancel { background: #e74c3c; color: white; border: none; padding: 12px; border-radius: 5px; flex: 1; cursor: pointer; }
 
+/* Controles de cantidad dentro del carrito */
+.controles-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.controles-cantidad button {
+    background: #333;
+    color: white;
+    border: 1px solid #27ae60;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-eliminar-uno {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-eliminar-uno:hover {
+    transform: scale(1.2);
+}
+
+/* Botón para vaciar todo el carrito */
+.btn-cancel-all {
+    background: #c0392b;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    flex: 1;
+}
+
+.btn-cancel-all:hover {
+    background: #e74c3c;
+}
 /* --- RESPONSIVE --- */
 @media (max-width: 600px) {
     .form-grid-cliente { grid-template-columns: 1fr; }
