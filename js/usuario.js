@@ -181,8 +181,16 @@ window.abrirCarrito = () => document.getElementById('modal-carrito').style.displ
 window.cerrarCarrito = () => document.getElementById('modal-carrito').style.display = 'none';
 window.cerrarDetalle = () => document.getElementById('modal-detalle').style.display = 'none';
 
-// Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-    cargarCategoriasDinamicas();
+    const barra = document.getElementById('input-busqueda');
+    if (barra) {
+        console.log("Buscador conectado con éxito");
+        barra.addEventListener('input', dibujarEventos);
+    } else {
+        console.error("No encontré el input con id 'input-busqueda'");
+    }
+    document.getElementById('filtro-ciudad').onchange = dibujarEventos;
+    document.getElementById('filtro-categoria').onchange = dibujarEventos;
+
     dibujarEventos();
 });
