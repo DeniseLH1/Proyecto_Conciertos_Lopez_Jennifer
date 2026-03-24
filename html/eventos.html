@@ -25,88 +25,95 @@
     </header>
 
     <main>
-        <div class="featured-banner">
-            <h2 class="banner-title">Gestión de Eventos</h2>
-            <p style="color: #666; margin-bottom: 10px;">Administra la cartelera de espectáculos</p>
-            <button id="btn-open-modal" class="btn-primary">+ Agregar Evento</button>
-        </div>
+        <section>
+            <h2>Gestión de Eventos</h2>
+            <p>Administra la cartelera de espectáculos</p>
+            <button id="btn-open-modal">+ Agregar Evento</button>
+        </section>
 
-        <div id="event-modal" class="modal-overlay" style="display: none;">
-            <div class="modal-content">
+        <div id="event-modal" style="display: none;">
+            <div>
                 <h3 id="modal-title">Registrar Evento</h3>
                 <form id="event-form">
                     <input type="hidden" id="edit-id">
-                    
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Código</label>
-                            <input type="text" id="ev-code" placeholder="Ej: EV-101" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Nombre del Evento</label>
-                            <input type="text" id="ev-name" placeholder="Ej: Rock al Parque" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Categoría</label>
-                            <select id="ev-category" required>
-                                </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Precio ($)</label>
-                            <input type="number" id="ev-price" placeholder="0.00" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Fecha</label>
-                            <input type="date" id="ev-date" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Hora</label>
-                            <input type="time" id="ev-time" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Ciudad</label>
-                            <select id="ev-city">
-                                <option value="Barranquilla">Barranquilla</option>
-                                <option value="Bogotá">Bogotá</option>
-                                <option value="Bucaramanga">Bucaramanga</option>
-                                <option value="Medellín">Medellín</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>URL Imagen</label>
-                            <input type="url" id="ev-image" placeholder="https://imagen.jpg">
-                        </div>
-                        <div class="form-group full-width">
-                            <label>Descripción Breve</label>
-                            <textarea id="ev-desc" rows="2" placeholder="Cuéntanos sobre el evento..."></textarea>
-                        </div>
+
+                    <div>
+                        <label>Código</label>
+                        <input type="text" id="ev-code" placeholder="Ej: EV-101" required>
                     </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn-save">Guardar Cambios</button>
-                        <button type="button" id="btn-close-modal" class="btn-cancel">Cancelar</button>
+
+                    <div>
+                        <label>Nombre del Evento</label>
+                        <input type="text" id="ev-name" placeholder="Ej: Rock al Parque" required>
+                    </div>
+
+                    <div>
+                        <label>Categoría</label>
+                        <select id="ev-category" required>
+                            <option value="Conciertos">Conciertos</option>
+                            <option value="Festivales">Festivales</option>
+                            <option value="Teatro">Teatro</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Precio ($)</label>
+                        <input type="number" id="ev-price" placeholder="0.00" required>
+                    </div>
+
+                    <div>
+                        <label>Fecha</label>
+                        <input type="date" id="ev-date" required>
+                    </div>
+
+                    <div>
+                        <label>Hora</label>
+                        <input type="time" id="ev-time" required>
+                    </div>
+
+                    <div>
+                        <label>Ciudad</label>
+                        <select id="ev-city" required>
+                            <option value="Bogotá">Bogotá</option>
+                            <option value="Medellín">Medellín</option>
+                            <option value="Bucaramanga">Bucaramanga</option>
+                            <option value="Barranquilla">Barranquilla</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>URL Imagen</label>
+                        <input type="url" id="ev-image" placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+
+                    <div>
+                        <label>Descripción</label>
+                        <textarea id="ev-desc" rows="2"></textarea>
+                    </div>
+
+                    <div>
+                        <button type="submit">Guardar Cambios</button>
+                        <button type="button" id="btn-close-modal">Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <section class="table-section">
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Vista</th>
-                            <th>Código</th>
-                            <th>Evento</th>
-                            <th>Ciudad</th>
-                            <th>Precio</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="events-table-body">
-                        </tbody>
-                </table>
-            </div>
+        <section>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Vista</th>
+                        <th>Código</th>
+                        <th>Evento</th>
+                        <th>Ciudad</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="events-table-body">
+                </tbody>
+            </table>
         </section>
     </main>
 </body>
