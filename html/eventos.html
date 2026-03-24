@@ -11,86 +11,87 @@
     <link rel="icon" href="/img/favicon/favicon-96x96.png">
     <title>Tickyiyo – Eventos</title>
     <link rel="stylesheet" href="../css/eventos.css">
-    <script src=”../js/eventos.js” defer></script>
+    <script src="../js/eventos.js" defer></script>
 </head>
 <body>
     <header>
-        <div class=”header-top”>
-            <img src="../img/Ticket.png" height=”80px”>
-            <h1 class=”title”>Tickyiyo - Eventos</h1>
-            <div class=”header-controls”>
-                <a href="../html/dashboard.html" class=”btn-logout”>Cerrar Sesión</a>
+        <div class="header-top">
+            <img src="../img/Ticket.png" height="80px">
+            <h1 class="title">Tickyiyo - Eventos</h1>
+            <div class="header-controls">
+                <a href="../html/dashboard.html" class="btn-logout">Regresar</a>
             </div>
         </div>
     </header>
 
     <main>
-        <div class=”featured-banner”>
-            <h2 class=”banner-title”>Gestión de Eventos</h2>
-            <button id=”btn-open-modal” class=”btn-primary”>+ Agregar Evento</button>
+        <div class="featured-banner">
+            <h2 class="banner-title">Gestión de Eventos</h2>
+            <p style="color: #666; margin-bottom: 10px;">Administra la cartelera de espectáculos</p>
+            <button id="btn-open-modal" class="btn-primary">+ Agregar Evento</button>
         </div>
 
-        <div id=”event-modal” class=”modal-overlay”>
-            <div class=”modal-content”>
-                <h3 id=”modal-title”>Registrar Evento</h3>
-                <form id=”event-form”>
-                    <input type=”hidden” id=”edit-id”>
+        <div id="event-modal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3 id="modal-title">Registrar Evento</h3>
+                <form id="event-form">
+                    <input type="hidden" id="edit-id">
                     
-                    <div class=”form-grid”>
-                        <div class=”form-group”>
+                    <div class="form-grid">
+                        <div class="form-group">
                             <label>Código</label>
-                            <input type=”text” id=”ev-code” placeholder=”Ej: EV-101” required>
+                            <input type="text" id="ev-code" placeholder="Ej: EV-101" required>
                         </div>
-                        <div class=”form-group”>
+                        <div class="form-group">
                             <label>Nombre del Evento</label>
-                            <input type=”text” id=”ev-name” placeholder=”Ej: Rock al Parque” required>
+                            <input type="text" id="ev-name" placeholder="Ej: Rock al Parque" required>
                         </div>
-                        <div class=”form-group”>
+                        <div class="form-group">
                             <label>Categoría</label>
-                            <select id=”ev-category” required>
+                            <select id="ev-category" required>
                                 </select>
                         </div>
-                        <div class=”form-group”>
+                        <div class="form-group">
                             <label>Precio ($)</label>
-                            <input type=”number” id=”ev-price” placeholder=”0.00” required>
+                            <input type="number" id="ev-price" placeholder="0.00" required>
                         </div>
-                        <div class=”form-group”>
+                        <div class="form-group">
                             <label>Fecha</label>
-                            <input type=”date” id=”ev-date” required>
+                            <input type="date" id="ev-date" required>
                         </div>
-                        <div class=”form-group”>
+                        <div class="form-group">
                             <label>Hora</label>
-                            <input type=”time” id=”ev-time” required>
+                            <input type="time" id="ev-time" required>
                         </div>
-                        <div class=”form-group”>
+                        <div class="form-group">
                             <label>Ciudad</label>
-                            <select id=”ev-city”>
-                                <option value=”Barranquilla”>Barranquilla</option>
-                                <option value=”Bogotá”>Bogotá</option>
-                                <option value=”Bucaramanga”>Bucaramanga</option>
-                                <option value=”Medellín”>Medellín</option>
+                            <select id="ev-city">
+                                <option value="Barranquilla">Barranquilla</option>
+                                <option value="Bogotá">Bogotá</option>
+                                <option value="Bucaramanga">Bucaramanga</option>
+                                <option value="Medellín">Medellín</option>
                             </select>
                         </div>
-                        <div class=”form-group”>
+                        <div class="form-group">
                             <label>URL Imagen</label>
-                            <input type=”url” id=”ev-image” placeholder=https://imagen.jpg>
+                            <input type="url" id="ev-image" placeholder="https://imagen.jpg">
                         </div>
-                        <div class=”form-group full-width”>
+                        <div class="form-group full-width">
                             <label>Descripción Breve</label>
-                            <textarea id=”ev-desc” rows=”2” placeholder=”Cuéntanos sobre el evento…”></textarea>
+                            <textarea id="ev-desc" rows="2" placeholder="Cuéntanos sobre el evento..."></textarea>
                         </div>
                     </div>
                     
-                    <div class=”form-actions”>
-                        <button type=”submit” class=”btn-save”>Guardar Cambios</button>
-                        <button type=”button” id=”btn-close-modal” class=”btn-cancel”>Cancelar</button>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-save">Guardar Cambios</button>
+                        <button type="button" id="btn-close-modal" class="btn-cancel">Cancelar</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <section class=”table-section”>
-            <div class=”table-responsive”>
+        <section class="table-section">
+            <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
@@ -102,7 +103,7 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id=”events-table-body”>
+                    <tbody id="events-table-body">
                         </tbody>
                 </table>
             </div>
