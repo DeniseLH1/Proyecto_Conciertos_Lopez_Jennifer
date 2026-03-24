@@ -258,6 +258,9 @@ tbody tr:hover {
     border: none; 
     background: none; 
 }
+.btn-edit-row:hover, .btn-delete-row:hover {
+    text-decoration: underline;
+}
 
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {

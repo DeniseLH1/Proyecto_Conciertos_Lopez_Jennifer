@@ -11,61 +11,62 @@
     <link rel="icon" href="/img/favicon/favicon-96x96.png">
     <title>Tickyiyo - Dashboard</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="../js/dashboard.js" defer></script>
 </head>
 <body>
-<!-- Baner principal -->
     <header>
         <div class="header-top">
-            <img src="../img/Ticket.png" height="100px">
-            <h1 class="title">Tickyiyo - Administrador 👤 </h1>
+            <img src="../img/Ticket.png" height="100px" alt="Logo Tickyiyo">
+            <h1 class="title">Tickyiyo - Administrador 👤</h1>
             <div class="header-controls">
                 <a href="../Tickyiyo.html" class="btn-logout">Cerrar Sesión</a>
             </div>
         </div>
         <nav>
-            <div class="header-nav">
-                <li class="nav-item"><a href="../html/categorias.html">Categorias</a></li>
+            <ul class="header-nav">
+                <li class="nav-item"><a href="../html/categorias.html">Categorías</a></li>
                 <li class="nav-item"><a href="../html/eventos.html">Eventos</a></li>
                 <li class="nav-item"><a href="../html/ventas.html">Ventas</a></li>
-            </div>
+            </ul>
         </nav>
     </header>
-<!-- Parte donde iran los eventos destacados -->
-    <main>
-        <div class="featured-banner">
-            <h2 class="banner-title">Gestión de eventos</h2>
-            <button id="btn-add-new" class="btn-primary">+ Agregar Nuevo</button>
-        </div>
 
-        <section id="form-container" class="admin-form-section" style="display: none;">
+    <main>
+        <section class="featured-banner">
+            <h2 class="banner-title">Panel de Control</h2>
+        </section>
+
+        <section id="form-container" class="admin-form-section" style="display: none; margin-bottom: 30px;">
             <div class="form-card">
-                <h3 id="form-title">Nuevo Registro</h3>
+                <h3 id="form-title">Editar Evento</h3>
                 <form id="main-form">
+                    <input type="hidden" id="edit-id">
+                    
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Código</label>
-                            <input type="text" name="codigo" placeholder="Ej: EV-01" required>
+                            <input type="text" id="ev-code" placeholder="Ej: EV-01" required>
                         </div>
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input type="text" name="nombre" placeholder="Nombre del evento" required>
+                            <input type="text" id="ev-name" placeholder="Nombre del evento" required>
                         </div>
                         <div class="form-group">
                             <label>Categoría</label>
-                            <select name="categoria" id="form-category-select">
+                            <select id="form-category-select">
                                 </select>
                         </div>
                         <div class="form-group">
                             <label>Precio ($)</label>
-                            <input type="number" name="precio" placeholder="0.00" required>
+                            <input type="number" id="ev-price" placeholder="0.00" required>
                         </div>
                         <div class="form-group">
                             <label>Fecha</label>
-                            <input type="date" name="fecha" required>
+                            <input type="date" id="ev-date" required>
                         </div>
                         <div class="form-group">
                             <label>Ciudad</label>
-                            <select name="ciudad">
+                            <select id="ev-city">
                                 <option value="Bogotá">Bogotá</option>
                                 <option value="Medellín">Medellín</option>
                                 <option value="Barranquilla">Barranquilla</option>
@@ -74,41 +75,24 @@
                         </div>
                         <div class="form-group full-width">
                             <label>URL Imagen</label>
-                            <input type="url" name="urlImage" placeholder="https://ejemplo.com/imagen.jpg">
+                            <input type="url" id="ev-image" placeholder="https://ejemplo.com/imagen.jpg">
                         </div>
                     </div>
-                    <div class="form-group full-width">
+                    <div class="form-group full-width" style="margin-top: 15px;">
                         <label>Descripción</label>
-                        <textarea name="descripcion" rows="3" placeholder="Detalles del evento..."></textarea>
+                        <textarea id="ev-desc" rows="3" placeholder="Detalles del evento..."></textarea>
                     </div>
                     
                     <div class="form-actions">
-                        <button type="submit" class="btn-save">Guardar Cambios</button>
-                        <button type="button" id="btn-cancel" class="btn-cancel">Cancelar</button>
+                        <button type="submit" class="btn-save">Actualizar Datos</button>
+                        <button type="button" onclick="closeEditForm()" class="btn-cancel">Cancelar</button>
                     </div>
                 </form>
             </div>
         </section>
 
-        <section class="table-section">
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr id="table-head-row">
-                            <th>Miniatura</th>
-                            <th>Evento</th>
-                            <th>Ciudad</th>
-                            <th>Precio</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-data-table">
-                        </tbody>
-                </table>
+        <div id="admin-cards-container" class="cards-grid">
             </div>
-        </section>
     </main>
-    
-
 </body>
 </html>
