@@ -1,11 +1,16 @@
-// Variable global del carrito
+// Variable global para almacenar los productos seleccionados
 let carrito = [];
 
-// 1. CARGAR CATEGORÍAS (Sincronizado con Administrador)
+/**
+ * 1. CARGAR CATEGORÍAS
+ * Trae las categorías desde el LocalStorage (creadas en el Admin)
+ * y las pone en el select de filtros.
+ */
 function cargarCategoriasDinamicas() {
     const filtroSelect = document.getElementById('filtro-categoria');
-    const categoriasGuardadas = JSON.parse(localStorage.getItem('categorias')) || [];
+    if (!filtroSelect) return;
 
+    const categoriasGuardadas = JSON.parse(localStorage.getItem('categorias')) || [];
     filtroSelect.innerHTML = '<option value="">Todas las Categorías</option>';
 
     categoriasGuardadas.forEach(cat => {
@@ -16,16 +21,27 @@ function cargarCategoriasDinamicas() {
     });
 }
 
-// 2. RENDERIZAR EVENTOS (Buscador + Filtros)
+/**
+ * 2. RENDERIZAR EVENTOS (Buscador + Filtros)
+ * Esta función se ejecuta cada vez que escribes o cambias un filtro.
+ */
 function dibujarEventos() {
     const eventos = JSON.parse(localStorage.getItem('eventos')) || [];
-    const textoBusqueda = document.getElementById('input-busqueda').value.toLowerCase();
-    const ciudadSel = document.getElementById('filtro-ciudad').value;
-    const catSel = document.getElementById('filtro-categoria').value;
-    
+    const busquedaInput = document.getElementById('input-busqueda');
+    const ciudadInput = document.getElementById('filtro-ciudad');
+    const catInput = document.getElementById('filtro-categoria');
     const contenedor = document.getElementById('contenedor-eventos');
+
+    if (!contenedor) return;
+
+    // Capturamos los valores actuales de los filtros
+    const textoBusqueda = busquedaInput ? busquedaInput.value.toLowerCase() : "";
+    const ciudadSel = ciudadInput ? ciudadInput.value : "";
+    const catSel = catInput ? catInput.value : "";
+
     contenedor.innerHTML = '';
 
+    // Aplicamos la lógica de filtrado
     const filtrados = eventos.filter(ev => {
         const coincideNombre = ev.nombre.toLowerCase().includes(textoBusqueda);
         const coincideCiudad = ciudadSel === "" || ev.ciudad === ciudadSel;
@@ -33,11 +49,15 @@ function dibujarEventos() {
         return coincideNombre && coincideCiudad && coincideCat;
     });
 
+    // Si no hay resultados
     if (filtrados.length === 0) {
-        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No se encontraron resultados.</p>`;
+        contenedor.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">
+            No se encontraron eventos que coincidan con tu búsqueda.
+        </p>`;
         return;
     }
 
+    // Dibujamos las tarjetas (Cards)
     filtrados.forEach(ev => {
         const card = document.createElement('article');
         card.className = 'event-card';
@@ -56,33 +76,40 @@ function dibujarEventos() {
     });
 }
 
-// 3. VISTA DE DETALLE
+/**
+ * 3. VISTA DE DETALLE (Modal de información)
+ */
 window.verDetalle = (id) => {
     const eventos = JSON.parse(localStorage.getItem('eventos')) || [];
     const ev = eventos.find(e => e.id === id);
     if (!ev) return;
 
-    document.getElementById('contenido-detalle').innerHTML = `
-        <div class="detalle-grid-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <img src="${ev.imagen}" style="width:100%; border-radius:10px;">
+    const contenido = document.getElementById('contenido-detalle');
+    contenido.innerHTML = `
+        <div class="detalle-grid-content">
+            <img src="${ev.imagen}" alt="${ev.nombre}" style="width:100%; border-radius:10px; max-height: 400px; object-fit: cover;">
             <div>
                 <h2>${ev.nombre}</h2>
-                <p style="margin: 15px 0; color: #aaa;">${ev.descripcion || 'Sin descripción.'}</p>
-                <p><strong>📍 Ciudad:</strong> ${ev.ciudad}</p>
-                <p><strong>🗓️ Fecha:</strong> ${ev.fecha} | 🕒 ${ev.hora || '20:00'}</p>
+                <p style="margin: 15px 0; color: #555; line-height: 1.6;">${ev.descripcion || 'Sin descripción disponible.'}</p>
+                <p><strong>📍 Ubicación:</strong> ${ev.ciudad}</p>
+                <p><strong>🗓️ Fecha y Hora:</strong> ${ev.fecha} | ${ev.hora || '20:00'}</p>
                 <h3 style="color: #27ae60; margin: 20px 0;">Precio: $${Number(ev.precio).toLocaleString()}</h3>
-                <button class="btn-save" onclick="agregarAlCarrito(${ev.id}); cerrarDetalle();">Añadir al Carrito</button>
+                <button class="btn-save" style="width: 100%;" onclick="agregarAlCarrito(${ev.id}); cerrarDetalle();">
+                    Añadir al Carrito ahora
+                </button>
             </div>
         </div>
     `;
     document.getElementById('modal-detalle').style.display = 'flex';
 };
 
-// 4. GESTIÓN DEL CARRITO (Cantidades y Botones)
+/**
+ * 4. GESTIÓN DEL CARRITO
+ */
 window.agregarAlCarrito = (id) => {
     const eventos = JSON.parse(localStorage.getItem('eventos')) || [];
     const ev = eventos.find(e => e.id === id);
-    
+
     const itemExistente = carrito.find(item => item.id === id);
     if (itemExistente) {
         itemExistente.cantidad += 1;
@@ -103,94 +130,102 @@ window.eliminarDelCarrito = (index) => {
     actualizarCarritoUI();
 };
 
+function actualizarCarritoUI() {
+    const badge = document.getElementById('contador-carrito');
+    const lista = document.getElementById('lista-carrito');
+    const totalElement = document.getElementById('precio-total');
+
+    if (badge) badge.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+    if (lista) {
+        lista.innerHTML = '';
+        let totalAcumulado = 0;
+
+        carrito.forEach((item, index) => {
+            const subtotal = Number(item.precio) * item.cantidad;
+            totalAcumulado += subtotal;
+            lista.innerHTML += `
+                <div class="item-carrito" style="display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <img src="${item.imagen}" width="50" height="50" style="object-fit:cover; border-radius:5px;">
+                    <div style="flex-grow:1; margin-left:10px;">
+                        <strong>${item.nombre}</strong><br>
+                        <div style="margin-top: 5px;">
+                            <button onclick="cambiarCantidad(${index}, -1)">-</button>
+                            <span style="margin: 0 10px;">${item.cantidad}</span>
+                            <button onclick="cambiarCantidad(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="color:#27ae60; font-weight: bold;">$${subtotal.toLocaleString()}</div>
+                        <button onclick="eliminarDelCarrito(${index})" style="background:none; border:none; color:red; cursor:pointer;">Eliminar</button>
+                    </div>
+                </div>
+            `;
+        });
+        if (totalElement) totalElement.textContent = `$${totalAcumulado.toLocaleString()}`;
+    }
+}
+
+/**
+ * 5. FINALIZAR COMPRA
+ */
+const formCompra = document.getElementById('form-compra');
+if (formCompra) {
+    formCompra.onsubmit = (e) => {
+        e.preventDefault();
+        if (carrito.length === 0) return alert("Tu carrito está vacío.");
+
+        const ventas = JSON.parse(localStorage.getItem('ventas')) || [];
+        const nuevaVenta = {
+            idVenta: "TICK-" + Date.now(),
+            fechaCompra: new Date().toLocaleString(),
+            cliente: {
+                id: document.getElementById('c-id').value,
+                nombre: document.getElementById('c-nombre').value,
+                direccion: document.getElementById('c-dir').value,
+                telefono: document.getElementById('c-tel').value,
+                email: document.getElementById('c-email').value
+            },
+            productos: [...carrito],
+            total: carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0)
+        };
+
+        ventas.push(nuevaVenta);
+        localStorage.setItem('ventas', JSON.stringify(ventas));
+
+        alert("¡Gracias por tu compra en Tickyiyo!");
+        carrito = [];
+        actualizarCarritoUI();
+        cerrarCarrito();
+        e.target.reset();
+    };
+}
+
+// FUNCIONES DE NAVEGACIÓN (Window para ser vistas desde el HTML)
+window.abrirCarrito = () => document.getElementById('modal-carrito').style.display = 'flex';
+window.cerrarCarrito = () => document.getElementById('modal-carrito').style.display = 'none';
+window.cerrarDetalle = () => document.getElementById('modal-detalle').style.display = 'none';
 window.cancelarCompra = () => {
-    if (confirm("¿Vaciar el carrito?")) {
+    if (confirm("¿Estás seguro de que quieres vaciar el carrito?")) {
         carrito = [];
         actualizarCarritoUI();
         cerrarCarrito();
     }
 };
 
-function actualizarCarritoUI() {
-    const badge = document.getElementById('contador-carrito');
-    const lista = document.getElementById('lista-carrito');
-    const totalElement = document.getElementById('precio-total');
-    
-    badge.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-    lista.innerHTML = '';
-    let totalAcumulado = 0;
-
-    carrito.forEach((item, index) => {
-        const subtotal = Number(item.precio) * item.cantidad;
-        totalAcumulado += subtotal;
-        lista.innerHTML += `
-            <div class="item-carrito">
-                <img src="${item.imagen}" width="50" height="50" style="object-fit:cover; border-radius:5px;">
-                <div style="flex-grow:1; margin-left:10px;">
-                    <strong>${item.nombre}</strong><br>
-                    <div class="controles-cantidad">
-                        <button onclick="cambiarCantidad(${index}, -1)">-</button>
-                        <span>${item.cantidad} tickets</span>
-                        <button onclick="cambiarCantidad(${index}, 1)">+</button>
-                    </div>
-                    <span style="color:#27ae60">$${subtotal.toLocaleString()}</span>
-                </div>
-                <button onclick="eliminarDelCarrito(${index})" style="background:none; border:none; cursor:pointer;">❌</button>
-            </div>
-        `;
-    });
-    totalElement.textContent = `$${totalAcumulado.toLocaleString()}`;
-}
-
-// 5. FINALIZAR COMPRA (Guardar con fecha)
-document.getElementById('form-compra').onsubmit = (e) => {
-    e.preventDefault();
-    if (carrito.length === 0) return alert("Carrito vacío");
-
-    const ventas = JSON.parse(localStorage.getItem('ventas')) || [];
-    const nuevaVenta = {
-        idVenta: "TICK-" + Date.now(),
-        fechaCompra: new Date().toLocaleString(), // REQUISITO: Fecha de pedido
-        cliente: {
-            id: document.getElementById('c-id').value,
-            nombre: document.getElementById('c-nombre').value,
-            direccion: document.getElementById('c-dir').value,
-            telefono: document.getElementById('c-tel').value,
-            email: document.getElementById('c-email').value
-        },
-        productos: [...carrito],
-        total: carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0)
-    };
-
-    ventas.push(nuevaVenta);
-    localStorage.setItem('ventas', JSON.stringify(ventas));
-    
-    alert("¡Compra exitosa!");
-    carrito = [];
-    actualizarCarritoUI();
-    cerrarCarrito();
-    e.target.reset();
-};
-
-// Eventos de escucha
-document.getElementById('input-busqueda').addEventListener('input', dibujarEventos);
-document.getElementById('filtro-ciudad').addEventListener('change', dibujarEventos);
-document.getElementById('filtro-categoria').addEventListener('change', dibujarEventos);
-
-window.abrirCarrito = () => document.getElementById('modal-carrito').style.display = 'flex';
-window.cerrarCarrito = () => document.getElementById('modal-carrito').style.display = 'none';
-window.cerrarDetalle = () => document.getElementById('modal-detalle').style.display = 'none';
-
+/**
+ * 6. INICIALIZACIÓN DE LISTENERS
+ * Esperamos a que el DOM esté listo para conectar los inputs
+ */
 document.addEventListener('DOMContentLoaded', () => {
-    const barra = document.getElementById('input-busqueda');
-    if (barra) {
-        console.log("Buscador conectado con éxito");
-        barra.addEventListener('input', dibujarEventos);
-    } else {
-        console.error("No encontré el input con id 'input-busqueda'");
-    }
-    document.getElementById('filtro-ciudad').onchange = dibujarEventos;
-    document.getElementById('filtro-categoria').onchange = dibujarEventos;
-
+    cargarCategoriasDinamicas();
     dibujarEventos();
+
+    // Conectamos los filtros al buscador
+    const inputBusqueda = document.getElementById('input-busqueda');
+    const filtroCiudad = document.getElementById('filtro-ciudad');
+    const filtroCategoria = document.getElementById('filtro-categoria');
+
+    if (inputBusqueda) inputBusqueda.addEventListener('input', dibujarEventos);
+    if (filtroCiudad) filtroCiudad.addEventListener('change', dibujarEventos);
+    if (filtroCategoria) filtroCategoria.addEventListener('change', dibujarEventos);
 });
