@@ -55,6 +55,20 @@ header {
     background: #ff4d4d;
     color: white;
 }
+.btn-regresar {
+    text-decoration: none;
+    color: #4d62ff;
+    font-weight: bold;
+    border: 1px solid #4d53ff;
+    padding: 5px 5px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-regresar:hover {
+    background: #4d62ff;
+    color: white;
+}
 
 /* --- NAVEGACIÓN --- */
 .header-nav {
