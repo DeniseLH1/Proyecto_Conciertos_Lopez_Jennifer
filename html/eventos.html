@@ -25,16 +25,15 @@
     </header>
 
     <main>
-        <section>
-            <h2>Gestión de Eventos</h2>
-            <p>Administra la cartelera de espectáculos</p>
-            <button id="btn-open-modal">+ Agregar Evento</button>
+        <section class="featured-banner">
+            <h2 class="banner-title">Gestión de Eventos</h2>
+            <button id="btn-open-modal" class="btn-primary id="btn-open-modal">+ Agregar Evento</button>
         </section>
 
-        <div id="event-modal" style="display: none;">
+        <div class="modal-overlay" id="event-modal" style="display: none;">
             <div>
                 <h3 id="modal-title">Registrar Evento</h3>
-                <form id="event-form">
+                <form class="modal-content" id="event-form">
                     <input type="hidden" id="edit-id">
 
                     <div>
@@ -92,8 +91,8 @@
                     </div>
 
                     <div>
-                        <button type="submit">Guardar Cambios</button>
-                        <button type="button" id="btn-close-modal">Cancelar</button>
+                        <button class="btn-save" type="submit">Guardar Cambios</button>
+                        <button class="btn-cancel" type="button" id="btn-close-modal">Cancelar</button>
                     </div>
                 </form>
             </div>
