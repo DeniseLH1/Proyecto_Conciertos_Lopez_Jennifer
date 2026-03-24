@@ -1,0 +1,165 @@
+/* --- ESTILOS BASE --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: linear-gradient(-135deg, rgb(20, 7, 20) 10%, rgb(11, 74, 14), rgb(8, 8, 3));
+    background-attachment: fixed;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    min-height: 100vh;
+}
+
+/* --- CABECERA Y FILTROS --- */
+header { background: rgba(0, 0, 0, 0.3); padding: 20px; }
+
+.header-top { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+
+.filter-bar {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px 0;
+    margin-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.filter-group select {
+    padding: 8px;
+    background: #1a1a1a;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 5px;
+}
+
+/* --- GRID DE EVENTOS --- */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.event-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    color: #333;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.event-card:hover { transform: translateY(-5px); }
+
+.event-image { height: 180px; background-size: cover; background-position: center; }
+
+.event-details { padding: 15px; }
+
+.event-price { font-size: 1.4rem; font-weight: bold; color: #27ae60; margin: 10px 0; }
+
+.btn-add-cart {
+    width: 100%;
+    padding: 10px;
+    background: #0b4a0e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* --- MODALES --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid #27ae60;
+}
+
+/* --- FORMULARIO DENTRO DEL CARRITO --- */
+.form-grid-cliente {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.form-grid-cliente input {
+    padding: 10px;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 5px;
+}
+
+.form-actions-carrito {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-save { background: #27ae60; color: white; border: none; padding: 12px; border-radius: 5px; flex: 2; cursor: pointer; font-weight: bold; }
+.btn-cancel { background: #e74c3c; color: white; border: none; padding: 12px; border-radius: 5px; flex: 1; cursor: pointer; }
+
+/* Controles de cantidad dentro del carrito */
+.controles-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.controles-cantidad button {
+    background: #333;
+    color: white;
+    border: 1px solid #27ae60;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-eliminar-uno {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-eliminar-uno:hover {
+    transform: scale(1.2);
+}
+
+/* Botón para vaciar todo el carrito */
+.btn-cancel-all {
+    background: #c0392b;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    flex: 1;
+}
+
+.btn-cancel-all:hover {
+    background: #e74c3c;
+}
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+    .form-grid-cliente { grid-template-columns: 1fr; }
+}

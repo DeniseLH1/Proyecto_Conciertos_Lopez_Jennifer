@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login Snooptick">
+    <meta name="description" content="HTML,css, pagina web, Snooptick">
+    <meta name="description" content="Denise López">
+    <meta name="description" content="Snooptick HTML">
+    <meta name="generator" content="VScode">
+    <link rel="icon" href="/img/favicon/favicon-96x96.png">
+    <title>Tickyiyo - Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="../js/dashboard.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-top">
+            <img src="../img/Ticket.png" height="100px" alt="Logo Tickyiyo">
+            <h1 class="title">Tickyiyo - Administrador 👤</h1>
+            <div class="header-controls">
+                <a href="../Tickyiyo.html" class="btn-logout">Cerrar Sesión</a>
+            </div>
+        </div>
+        <nav>
+            <ul class="header-nav">
+                <li class="nav-item"><a href="../html/categorias.html">Categorías</a></li>
+                <li class="nav-item"><a href="../html/eventos.html">Eventos</a></li>
+                <li class="nav-item"><a href="../html/ventas.html">Ventas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="featured-banner">
+            <h2 class="banner-title">Panel de Control</h2>
+        </section>
+
+        <section id="form-container" class="admin-form-section" style="display: none; margin-bottom: 30px;">
+            <div class="form-card">
+                <h3 id="form-title">Editar Evento</h3>
+                <form id="main-form">
+                    <input type="hidden" id="edit-id">
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Código</label>
+                            <input type="text" id="ev-code" placeholder="Ej: EV-01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" id="ev-name" placeholder="Nombre del evento" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoría</label>
+                            <select id="form-category-select">
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Precio ($)</label>
+                            <input type="number" id="ev-price" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha</label>
+                            <input type="date" id="ev-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ciudad</label>
+                            <select id="ev-city">
+                                <option value="Bogotá">Bogotá</option>
+                                <option value="Medellín">Medellín</option>
+                                <option value="Barranquilla">Barranquilla</option>
+                                <option value="Bucaramanga">Bucaramanga</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>URL Imagen</label>
+                            <input type="url" id="ev-image" placeholder="https://ejemplo.com/imagen.jpg">
+                        </div>
+                    </div>
+                    <div class="form-group full-width" style="margin-top: 15px;">
+                        <label>Descripción</label>
+                        <textarea id="ev-desc" rows="3" placeholder="Detalles del evento..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-save">Actualizar Datos</button>
+                        <button type="button" onclick="closeEditForm()" class="btn-cancel">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <div id="admin-cards-container" class="cards-grid">
+            </div>
+    </main>
+</body>
+</html>
