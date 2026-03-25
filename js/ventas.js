@@ -4,28 +4,37 @@ const detailContainer = document.getElementById('order-full-details');
 
 // --- 1. RENDERIZAR VENTAS ---
 function renderSales() {
-    // Obtenemos los datos de la "llave" ventas
     const sales = JSON.parse(localStorage.getItem('ventas')) || [];
 
-    // Ordenar: Más recientes arriba
-    sales.sort((a, b) => new Date(b.fechaVenta) - new Date(a.fechaVenta));
+    // Ajuste para Chrome: Validar que existan fechas antes de ordenar
+    sales.sort((a, b) => {
+        const fechaA = new Date(a.fechaVenta || a.fechaCompra);
+        const fechaB = new Date(b.fechaVenta || b.fechaCompra);
+        return fechaB - fechaA;
+    });
 
     salesTable.innerHTML = '';
 
     if (sales.length === 0) {
-        salesTable.innerHTML = '<tr><td colspan="5" style="text-align:center; background:white; border-radius:10px;">No hay registros de ventas.</td></tr>';
+        salesTable.innerHTML = '<tr><td colspan="5" style="text-align:center; background:white; padding:20px;">No hay registros de ventas.</td></tr>';
         return;
     }
 
     sales.forEach(sale => {
+        // Chrome a veces prefiere fechaCompra si fechaVenta viene nulo
+        const fechaMostrar = sale.fechaVenta || sale.fechaCompra || "Sin fecha";
+        
+        // IMPORTANTE: Usamos idVenta o id, lo que exista
+        const idCorrecto = sale.idVenta || sale.id;
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${new Date(sale.fechaVenta).toLocaleDateString()}</td>
+            <td>${fechaMostrar}</td>
             <td><strong>${sale.cliente.nombre}</strong></td>
-            <td>${sale.ciudad}</td>
+            <td>${sale.ciudad || 'N/A'}</td>
             <td style="font-weight: bold; color: #27ae60;">$${Number(sale.total).toLocaleString()}</td>
             <td>
-                <span class="btn-detail" onclick="viewDetail('${sale.id}')">Ver Detalle</span>
+                <button class="btn-detail" onclick="viewDetail('${idCorrecto}')">Ver Detalle</button>
             </td>
         `;
         salesTable.appendChild(tr);
@@ -33,9 +42,10 @@ function renderSales() {
 }
 
 // --- 2. MOSTRAR DETALLE COMPLETO ---
-window.viewDetail = (id) => {
+window.viewDetail = (idBusqueda) => {
     const sales = JSON.parse(localStorage.getItem('ventas')) || [];
-    const sale = sales.find(s => s.id === id);
+    // Buscamos coincidencia en id o idVenta
+    const sale = sales.find(s => (s.idVenta === idBusqueda || s.id === idBusqueda));
 
     if (sale) {
         detailContainer.innerHTML = `
