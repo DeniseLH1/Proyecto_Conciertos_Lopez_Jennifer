@@ -192,7 +192,12 @@ if (formCompra) {
         ventas.push(nuevaVenta);
         localStorage.setItem('ventas', JSON.stringify(ventas));
 
-        alert("¡Gracias por tu compra en Tickyiyo!");
+        Swal.fire({
+        title: '¡Éxito!',
+        text: 'Tu compra en Tickyiyo fue procesada',
+        icon: 'success',
+        confirmButtonText: 'Genial'
+});;
         carrito = [];
         actualizarCarritoUI();
         cerrarCarrito();
