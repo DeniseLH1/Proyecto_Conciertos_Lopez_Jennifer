@@ -71,7 +71,7 @@ function dibujarEventos() {
                 <p class="event-meta">📍 ${ev.ciudad}</p>
                 <div class="event-price">$${Number(ev.precio).toLocaleString()}</div>
                 <button class="btn-add-cart" onclick="agregarAlCarrito(${ev.id})">Agregar al Carrito</button>
-                <button class="btn-add-buzon" onclick="agregarAlBuzon(${ev.bu})">Agregar al buzon</buton>
+                
             </div>
         `;
         contenedor.appendChild(card);
@@ -305,49 +305,41 @@ window.agregarAlCarrito = (id) => {
     actualizarCarritoUI();
 };
 
-window.cambiarCantidad = (index, cambio) => {
-    carrito[index].cantidad += cambio;
-    if (carrito[index].cantidad <= 0) carrito.splice(index, 1);
-    actualizarCarritoUI();
-};
+// Abrir y cerrar el modal del buzón
+window.abrirBuzon = () => document.getElementById('modal-buzon').style.display = 'flex';
+window.cerrarBuzon = () => document.getElementById('modal-buzon').style.display = 'none';
 
-window.eliminarDelCarrito = (index) => {
-    carrito.splice(index, 1);
-    actualizarCarritoUI();
-};
+// Escuchar el envío del formulario de sugerencias
+const formSugerencia = document.getElementById('form-sugerencia');
+if (formSugerencia) {
+    formSugerencia.onsubmit = (e) => {
+        e.preventDefault();
 
-function actualizarCarritoUI() {
-    const badge = document.getElementById('contador-carrito');
-    const lista = document.getElementById('lista-carrito');
-    const totalElement = document.getElementById('precio-total');
+        // 1. Obtener los datos (fíjate que los IDs coincidan con tu HTML)
+        const nuevaSugerencia = {
+            nombre: e.target.querySelector('#c-nombre').value,
+            email: e.target.querySelector('#c-email').value,
+            sugerencia: e.target.querySelector('#c-sur').value,
+            fecha: new Date().toLocaleString()
+        };
 
-    if (badge) badge.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-    if (lista) {
-        lista.innerHTML = '';
-        let totalAcumulado = 0;
+        // 2. Traer lo que ya existe en LocalStorage o crear arreglo vacío
+        const sugerenciasExistentes = JSON.parse(localStorage.getItem('sugerencias')) || [];
+        
+        // 3. Guardar
+        sugerenciasExistentes.push(nuevaSugerencia);
+        localStorage.setItem('sugerencias', JSON.stringify(sugerenciasExistentes));
 
-        carrito.forEach((item, index) => {
-            const subtotal = Number(item.precio) * item.cantidad;
-            totalAcumulado += subtotal;
-            lista.innerHTML += `
-                <div class="item-carrito" style="display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                    <img src="${item.imagen}" width="50" height="50" style="object-fit:cover; border-radius:5px;">
-                    <div style="flex-grow:1; margin-left:10px;">
-                        <strong>${item.nombre}</strong><br>
-                        <div style="margin-top: 5px;">
-                            <button onclick="cambiarCantidad(${index}, -1)">-</button>
-                            <span style="margin: 0 10px;">${item.cantidad}</span>
-                            <button onclick="cambiarCantidad(${index}, 1)">+</button>
-                        </div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="color:#27ae60; font-weight: bold;">$${subtotal.toLocaleString()}</div>
-                        <button onclick="eliminarDelCarrito(${index})" style="background:none; border:none; color:red; cursor:pointer;">Eliminar</button>
-                    </div>
-                </div>
-            `;
+        // 4. Notificar éxito con SweetAlert2
+        Swal.fire({
+            title: '¡Gracias!',
+            text: 'Tu sugerencia ha sido enviada con éxito.',
+            icon: 'success',
+            confirmButtonText: 'Cerrar'
         });
-        if (totalElement) totalElement.textContent = `$${totalAcumulado.toLocaleString()}`;
-    }
+
+        // 5. Limpiar y cerrar
+        e.target.reset();
+        cerrarBuzon();
+    };
 }
-S
