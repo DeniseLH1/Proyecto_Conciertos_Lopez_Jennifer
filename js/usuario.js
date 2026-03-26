@@ -234,3 +234,49 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filtroCiudad) filtroCiudad.addEventListener('change', dibujarEventos);
     if (filtroCategoria) filtroCategoria.addEventListener('change', dibujarEventos);
 });
+document.addEventListener('DOMContentLoaded', () => {
+    // Es vital llamar a inicializar aquí también por si el usuario 
+    const existentes = JSON.parse(localStorage.getItem('eventos'));
+    if (!existentes || existentes.length === 0) {
+        const semilla = [{
+            id: 1711280000001,
+            codigo: 'EV-101',
+            nombre: 'PAULO LONDRA',
+            categoria: 'Conciertos',
+            ciudad: 'Bogotá',
+            precio: 250000,
+            imagen: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745'
+        }];
+        localStorage.setItem('eventos', JSON.stringify(semilla));
+    }
+    dibujarEventos(); 
+});
+function cargarCategoriasDinamicas() {
+    const filtroSelect = document.getElementById('filtro-categoria'); 
+    if (!filtroSelect) return;
+
+    const categoriasGuardadas = JSON.parse(localStorage.getItem('categorias')) || [];
+    
+    // Limpiamos y dejamos la opción por defecto
+    filtroSelect.innerHTML = '<option value="">Todas las Categorías</option>';
+
+    // Creamos una opción por cada categoría guardada
+    categoriasGuardadas.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.nombre;
+        option.textContent = cat.nombre;
+        filtroSelect.appendChild(option);
+    });
+}
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Inicializar categorías si están vacías (Semilla)
+    if (!localStorage.getItem('categorias')) {
+        const catSemilla = [{ id: 1, nombre: 'Conciertos', descripcion: 'Música en vivo' }];
+        localStorage.setItem('categorias', JSON.stringify(catSemilla));
+    }
+    // 2. Cargar el menú desplegable de filtros
+    cargarCategoriasDinamicas();
+
+    // 3. Dibujar los eventos (como ya lo tenías)
+    dibujarEventos();
+});
