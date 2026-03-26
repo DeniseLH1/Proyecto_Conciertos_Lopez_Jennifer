@@ -1,5 +1,6 @@
 // Variable global para almacenar los productos seleccionados
 let carrito = [];
+let buzon=[];
 
 /**
  * 1. CARGAR CATEGORÍAS
@@ -70,6 +71,7 @@ function dibujarEventos() {
                 <p class="event-meta">📍 ${ev.ciudad}</p>
                 <div class="event-price">$${Number(ev.precio).toLocaleString()}</div>
                 <button class="btn-add-cart" onclick="agregarAlCarrito(${ev.id})">Agregar al Carrito</button>
+                <button class="btn-add-buzon" onclick="agregarAlBuzon(${ev.bu})">Agregar al buzon</buton>
             </div>
         `;
         contenedor.appendChild(card);
@@ -235,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (filtroCategoria) filtroCategoria.addEventListener('change', dibujarEventos);
 });
 document.addEventListener('DOMContentLoaded', () => {
-    // Es vital llamar a inicializar aquí también por si el usuario 
+    // Es vital llamar a inicializar aquí también por si el usuario
     const existentes = JSON.parse(localStorage.getItem('eventos'));
     if (!existentes || existentes.length === 0) {
         const semilla = [{
@@ -249,14 +251,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }];
         localStorage.setItem('eventos', JSON.stringify(semilla));
     }
-    dibujarEventos(); 
+    dibujarEventos();
 });
 function cargarCategoriasDinamicas() {
-    const filtroSelect = document.getElementById('filtro-categoria'); 
+    const filtroSelect = document.getElementById('filtro-categoria');
     if (!filtroSelect) return;
 
     const categoriasGuardadas = JSON.parse(localStorage.getItem('categorias')) || [];
-    
+
     // Limpiamos y dejamos la opción por defecto
     filtroSelect.innerHTML = '<option value="">Todas las Categorías</option>';
 
@@ -280,3 +282,72 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Dibujar los eventos (como ya lo tenías)
     dibujarEventos();
 });
+
+
+
+// buzon
+/**
+ * 4. GESTIÓN DEL BUZON
+ */
+/**
+ * 4. GESTIÓN DEL CARRITO
+ */
+window.agregarAlCarrito = (id) => {
+    const eventos = JSON.parse(localStorage.getItem('eventos')) || [];
+    const ev = eventos.find(e => e.id === id);
+
+    const itemExistente = carrito.find(item => item.id === id);
+    if (itemExistente) {
+        itemExistente.cantidad += 1;
+    } else {
+        carrito.push({ ...ev, cantidad: 1 });
+    }
+    actualizarCarritoUI();
+};
+
+window.cambiarCantidad = (index, cambio) => {
+    carrito[index].cantidad += cambio;
+    if (carrito[index].cantidad <= 0) carrito.splice(index, 1);
+    actualizarCarritoUI();
+};
+
+window.eliminarDelCarrito = (index) => {
+    carrito.splice(index, 1);
+    actualizarCarritoUI();
+};
+
+function actualizarCarritoUI() {
+    const badge = document.getElementById('contador-carrito');
+    const lista = document.getElementById('lista-carrito');
+    const totalElement = document.getElementById('precio-total');
+
+    if (badge) badge.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+    if (lista) {
+        lista.innerHTML = '';
+        let totalAcumulado = 0;
+
+        carrito.forEach((item, index) => {
+            const subtotal = Number(item.precio) * item.cantidad;
+            totalAcumulado += subtotal;
+            lista.innerHTML += `
+                <div class="item-carrito" style="display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <img src="${item.imagen}" width="50" height="50" style="object-fit:cover; border-radius:5px;">
+                    <div style="flex-grow:1; margin-left:10px;">
+                        <strong>${item.nombre}</strong><br>
+                        <div style="margin-top: 5px;">
+                            <button onclick="cambiarCantidad(${index}, -1)">-</button>
+                            <span style="margin: 0 10px;">${item.cantidad}</span>
+                            <button onclick="cambiarCantidad(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="color:#27ae60; font-weight: bold;">$${subtotal.toLocaleString()}</div>
+                        <button onclick="eliminarDelCarrito(${index})" style="background:none; border:none; color:red; cursor:pointer;">Eliminar</button>
+                    </div>
+                </div>
+            `;
+        });
+        if (totalElement) totalElement.textContent = `$${totalAcumulado.toLocaleString()}`;
+    }
+}
+S

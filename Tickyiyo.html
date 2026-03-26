@@ -27,6 +27,10 @@
                     <span class="cart-icon">🛒</span>
                     <span id="contador-carrito" class="cart-badge">0</span>
                 </div>
+                <!-- Buzon de suegerencias -->
+                <div class="cart-container" onclick="abrirBuzon()">
+                    <span class="cart-icon"><img src="../img/buzon.png" width="40px"></span>
+                </div>
             </div>
         </div>
         
@@ -84,6 +88,27 @@
                         <button type="submit" class="btn-save">Finalizar Compra</button>
                         <button type="button" class="btn-cancel-all" onclick="cancelarCompra()">Cancelar y Vaciar</button>
                         <button type="button" class="btn-cancel" onclick="cerrarCarrito()">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Buzon de sugerencias -->
+        <div id="modal-buzon" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3 style="margin-bottom: 20px;">Buzon de sugerencias</h3>
+                <div id="lista-buzon"></div>
+
+                <form id="form-sugerencia">
+                    <h4>Ingrese los siguientes datos</h4>
+                    <div class="form-grid-cliente">
+                        <input type="text" id="c-nombre" placeholder="Nombre Completo" required>
+                        <input type="email" id="c-email" placeholder="E-mail" required>
+                        <input type="text" id="c-sur" placeholder="Sugerencia" required>
+                    </div>
+                    
+                    <div class="form-actions-carrito" style="margin-top: 20px;">
+                        <button type="submit" class="btn-save">Finalizar Sugerencia</button>
+                        <button type="button" class="btn-cancel" onclick="cerrarBuzon()">Cerrar</button>
                     </div>
                 </form>
             </div>
