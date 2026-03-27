@@ -13,8 +13,10 @@ function renderDashboardCards() {
         card.className = 'event-card-admin';
         
         card.innerHTML = `
-            <div class="card-img-container">
-                <img src="${ev.imagen || '../img/placeholder.png'}" onerror="this.src='../img/placeholder.png'">
+            <div class="card-img-container" style="width: 50%; height: 180px; overflow: hidden; border-radius: 15px 15px 0 0;">
+            <img src="${ev.imagen || '../img/placeholder.png'}" 
+            onerror="this.src='../img/placeholder.png'"
+            style="width: 100%; height: 100%; object-fit: cover; display: block;">
             </div>
             <div class="card-body-admin">
                 <span style="background: #0b4a0e; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; text-transform: uppercase;">
