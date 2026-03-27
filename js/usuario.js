@@ -207,7 +207,7 @@ if (formCompra) {
     };
 }
 
-// FUNCIONES DE NAVEGACIÓN (Window para ser vistas desde el HTML)
+// FUNCIONES DE NAVEGACIÓN 
 window.abrirCarrito = () => document.getElementById('modal-carrito').style.display = 'flex';
 window.cerrarCarrito = () => document.getElementById('modal-carrito').style.display = 'none';
 window.cerrarDetalle = () => document.getElementById('modal-detalle').style.display = 'none';
@@ -273,7 +273,12 @@ function cargarCategoriasDinamicas() {
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Inicializar categorías si están vacías (Semilla)
     if (!localStorage.getItem('categorias')) {
-        const catSemilla = [{ id: 1, nombre: 'Conciertos', descripcion: 'Música en vivo' }];
+        const catSemilla = [
+            { id: 1, nombre: 'Conciertos', descripcion: 'Eventos musicales en vivo de todos los géneros.' },
+            { id: 2, nombre: 'Teatro', descripcion: 'Obras dramáticas, musicales y presentaciones escénicas.' },
+            { id: 3, nombre: 'Festivales', descripcion: 'Grandes eventos con múltiples artistas y actividades.' },
+            { id: 4, nombre: 'Deportes', descripcion: 'Encuentros deportivos y competencias nacionales.' }
+];
         localStorage.setItem('categorias', JSON.stringify(catSemilla));
     }
     // 2. Cargar el menú desplegable de filtros
@@ -287,35 +292,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // buzon
 /**
- * 4. GESTIÓN DEL BUZON
+ * GESTIÓN DEL BUZON
  */
-/**
- * 4. GESTIÓN DEL CARRITO
- */
-window.agregarAlCarrito = (id) => {
-    const eventos = JSON.parse(localStorage.getItem('eventos')) || [];
-    const ev = eventos.find(e => e.id === id);
-
-    const itemExistente = carrito.find(item => item.id === id);
-    if (itemExistente) {
-        itemExistente.cantidad += 1;
-    } else {
-        carrito.push({ ...ev, cantidad: 1 });
-    }
-    actualizarCarritoUI();
-};
 
 // Abrir y cerrar el modal del buzón
 window.abrirBuzon = () => document.getElementById('modal-buzon').style.display = 'flex';
 window.cerrarBuzon = () => document.getElementById('modal-buzon').style.display = 'none';
 
-// Escuchar el envío del formulario de sugerencias
+// envío del formulario de sugerencias
 const formSugerencia = document.getElementById('form-sugerencia');
 if (formSugerencia) {
     formSugerencia.onsubmit = (e) => {
         e.preventDefault();
 
-        // 1. Obtener los datos (fíjate que los IDs coincidan con tu HTML)
+        // 1. Obtener los datos 
         const nuevaSugerencia = {
             nombre: e.target.querySelector('#c-nombre').value,
             email: e.target.querySelector('#c-email').value,
